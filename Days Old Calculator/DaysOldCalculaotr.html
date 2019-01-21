@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+
+
+	<style>
+	.center {
+	position: relative;
+	text-align: center;
+
+}
+body {
+	background: #aa67fc;
+
+
+}
+
+</style>
+
+    <h1 class=" center" style="font-size: 80px; top: 150px;"> PLEASE INPUT YOUR BIRTHDATE </h1>
+    <form>
+        <input type="date" id="birthDate" style="position: relative; top: 200px" class="alert alert-danger btn-block center"> </input>
+    </form>
+    <button onclick="begin()" style="top: 360px; border: none; position: absolute;" class="center btn-success btn-block btn-lg"> Done </button>
+
+    <h2 id="total" class="center" style="top: 500px"> </h2>
+
+	<script>
+	function begin() {
+
+
+
+    var birthIn = document.getElementById("birthDate");
+
+
+
+    var birth = new Date(birthIn.value); //Make the Form value into a JavaScript date
+    var years = new Date().getFullYear() - birth.getFullYear();
+
+    var birthMilli = birth.getTime(); //Turn into Milliseconds
+
+    var today = new Date().getTime(); //Get today into milliseconds
+    var total = today - birthMilli; //Difference
+
+
+    var total = Math.floor((total / 1000 / 60 / 60 / 24)); //Convert into days
+    var graduation = birth.getFullYear() + 17;
+    if (birthIn.value == ""){
+      total = "Please input a date"
+    }
+    else if (total < 0) {
+        var total = "Please input a valid date"
+    }
+
+
+    else if (years - 5 == 0) {//YEARS - 5 EQUALS GRADE
+        var total = `You are ${total} days old and most likely in kindergarten. You will probably graduate in ${graduation}.`
+    } else if (years > 0 && years < 18) {
+        var total = `You are ${total} days old and most likely in grade ${years - 5}. You will probably graduate in ${graduation}.`
+
+    }
+
+
+
+    else {
+        total = `You are ${total} days old and most likely graduated in ${graduation}.`
+
+    }
+
+    document.getElementById("total").innerHTML = total;
+}
+</script>
+</body>
+
+</html>
