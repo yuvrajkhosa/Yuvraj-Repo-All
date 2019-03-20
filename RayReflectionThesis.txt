@@ -1,0 +1,28 @@
+Get initial ray direction. (70)
+Get tilt of surface (10);
+
+Get what the reflection would be if mirror is perfectly vertical (0 degrees) by (180 - initAngle);
+
+Get what the surfaceTilt it, multiply by two. Becasue each for every degree the surface is tilted, the ray's angle will be altered double that of what is changed in the mirror. 
+So if angle of mirror is 0 degrees and ray is coming at 70 degrees. The resulting angle is 180 - 70 = 110; 
+
+If mirror is tilted +10 degrees. Then the angle of the resulting ray is increased by double the tilt, so (10 * 2 = 20);
+
+Resuling angle equals 110 + (+20) = 130;
+
+FORUMLA = (180 - InitialAngle) + (surfaceTilt * 2)
+	  (180 -  70) + (10  * 2) = 130 degrees;
+
+
+EXAMPLE. If mirror is perfectly vertical (0 degrees) and light angle is 70 degrees. (170 - 70 = 110)
+
+110 + (20 * 2) = 150;
+
+
+
+265 init
+40 tilt
+
+(180 - 265) + (40 * 2) = -5
+
+IF NEGAtIVE NUMBER THEN DO 360 - abs(result). SO (360 - 5) = 355 degrees Resulting angle!
