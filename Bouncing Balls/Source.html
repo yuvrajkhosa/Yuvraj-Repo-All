@@ -1,0 +1,145 @@
+<!DOCTYPE html> <body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.dom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.dom.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.sound.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.sound.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.js"></script>
+<script src="balls.js"> </script>
+
+<script>
+
+var color
+let checked = false;
+var ballArr = [];
+var blueTeam = 0;
+var amountOfBalls = 80;
+var allDone = false;
+var num = 0;
+var num2 = 0;
+var ballsCount = 0;
+var currentX;
+var thenX;
+
+
+
+function setup(){
+  frameRate(100)
+
+  createCanvas(800,800)
+for (let i = amountOfBalls; i >= 0; i--){
+  ballArr[i] = new ball();
+  ballArr[i].createBall()
+
+}
+do{
+  num = 0;
+for (let i = ballArr.length -1; i > 0; i--){
+
+
+
+
+  for (let j = ballArr.length - 1; j > 0; j-- ){
+
+if (i != j && ballArr[i].intersects(ballArr[j])){
+
+  ballArr[i] = new ball()
+
+  ballArr[i].createBall()
+  num++;
+
+}
+}
+
+}
+
+} while (num != 0)
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+function draw(){
+  background(200)
+
+
+
+
+
+
+
+
+
+ for (let i of ballArr){
+  i.startMoving()
+}
+
+
+
+
+
+
+
+
+for (i of ballArr) {
+  for (j of ballArr){
+
+  if (i != j && j.intersects(i)){
+    i.xDir *= -1;
+    i.yDir *= -1;
+
+    i.changeColor(0,255,255)
+  }
+
+
+
+
+}
+}
+
+
+
+for (i in ballArr){
+ballArr[i].show()
+}
+
+ballsCount = 0;
+for (i in ballArr){
+  ballsCount++;
+}
+text(ballsCount, width - 20,height - 20)
+
+
+// for (i of ballArr){
+//     for (j of ballArr){
+//         if (i != j && i.inside(j)){
+//           i.changeColor(0,255,0)
+//           i.xDir *= -1;
+//           i.yDir *= -1;
+//
+//         }
+//
+//
+//     }
+//
+//
+//
+//
+// }
+
+
+
+}
+</script>
+</body>
