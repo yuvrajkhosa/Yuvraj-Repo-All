@@ -1,0 +1,14 @@
+
+
+Version:	3.12
+CmdLine:	C:\Users\Yuvraj\Desktop\WordSearchLibraryes\Application.exe --l4j-debug
+WOW64:		yes
+Working dir:	C:\Users\Yuvraj\Desktop\WordSearchLibraryes\.
+Java min ver:	
+Java max ver:	
+Bundled JRE:	jre1.8.0_201
+Check launcher:	C:\Users\Yuvraj\Desktop\WordSearchLibraryes\jre1.8.0_201\bin\javaw.exe (OK)
+Launcher:	C:\Users\Yuvraj\Desktop\WordSearchLibraryes\jre1.8.0_201\bin\javaw.exe
+Launcher args:	-jar "C:\Users\Yuvraj\Desktop\WordSearchLibraryes\Application.exe"
+Args length:	66/32768 chars
+Exit code:	0
