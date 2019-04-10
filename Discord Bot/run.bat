@@ -1,1 +1,0 @@
-node C:\Users\Yuvraj\Desktop\BatBot\index.js
