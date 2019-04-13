@@ -1,16 +1,16 @@
 var pegs = [];
 var ballArr = [];
-var amountOfPegs = 70;
-var rows = 7;
+var amountOfPegs = 150;
+var rows = 15;
 function setup(){
   createCanvas(1000,900);
-  ballArr.push(new Ball(0,0, 40, 30));
+  ballArr.push(new Ball(0,0, 40, 2.5));
   let offSet = 0;
-  let verticalDistance = 100;
+  let verticalDistance = 0;
   let horizontalDistance = 50;
   for(var i = 0; i < amountOfPegs; i++){
     if(i % (amountOfPegs / rows) == 0){
-      verticalDistance += 100;
+      verticalDistance += 50;
       horizontalDistance = 0;
       if(offSet > 0){
         offSet = 0;
@@ -19,7 +19,7 @@ function setup(){
         offSet = 50;
       }
     }
-    pegs.push(new Peg(horizontalDistance + offSet, verticalDistance , 25))
+    pegs.push(new Peg(20 + horizontalDistance + offSet, verticalDistance , 15))
     horizontalDistance += 100;
   }
   frameRate(60);
@@ -53,10 +53,12 @@ function draw(){
   strokeWeight(1)
   noStroke();
   if(ballArr[0].isReleased){
-    ballArr[0].applyForce(createVector(0, 1).mult(ballArr[0].mass));//Add graviy
+    ballArr[0].applyForce(createVector(0, 1));//Add gravtiy. Used to  be like ballArr[0].applyForce(createVector(0, 1).mult(ball[0].mass)) this removes the slowing down with alot of mass. But removed to simulate the ball dragging on the back of the board
   }
   else{
-    ballArr[0].pos.x = mouseX;
+    if(mouseX > (ballArr[0].diameter / 1.5) && mouseX < width - (ballArr[0].diameter / 1.5)){
+      ballArr[0].pos.x = mouseX;
+    }
     ballArr[0].pos.y = 20;
   }
   ballArr[0].update();
