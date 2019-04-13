@@ -20,16 +20,19 @@ function begin() {
     var total = Math.floor((total / 1000 / 60 / 60 / 24)); //Convert into days
     var graduation = birth.getFullYear() + 17;
     if (total < 0) {
-        var total = "Please input a vafflid date"
-    } else if (grade == 0) {
-        var total = `You are ${total} days old and most likely in kindergarten. You will probably graduate in ${graduation}.`
-    } else if (years > 0 && years < 18) {
+        total = "Please input a valid date"
+    } 
+	else if (grade == 0) {
+        total = `You are ${total} days old and most likely in kindergarten. You will probably graduate in ${graduation}.`
+	} 
+	else if (years > 0 && years < 18) {
+		if(grade < 0){
+			console.log("OYUNG");
+		}
+		total = `You are ${total} days old and most likely in grade ${grade}. You will probably graduate in ${graduation}.`
+	} 
 
-
-
-        var total = `You are ${total} days old and most likely in grade ${grade}. You will probably graduate in ${graduation}.`
-
-    } else {
+	else {
         total = `You are ${total} days old and most likely graduated in ${graduation}.`
 
     }
