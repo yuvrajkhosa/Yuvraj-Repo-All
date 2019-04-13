@@ -4,7 +4,7 @@ var amountOfPegs = 150;
 var rows = 15;
 function setup(){
   createCanvas(1000,900);
-  ballArr.push(new Ball(0,0, 40, 2.5));
+  ballArr.push(new Ball(0,0, 40, 2));
   let offSet = 0;
   let verticalDistance = 0;
   let horizontalDistance = 50;

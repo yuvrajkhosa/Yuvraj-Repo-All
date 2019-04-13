@@ -68,8 +68,8 @@ class Peg{
      let currVelMag = ball.vel.mag();
      ball.pos.add((p5.Vector.sub(ball.pos, this.pos)).setMag(Math.abs(distanceBetween)));
      ball.vel.mult(0.5);
-     ball.vel.add(createVector(Math.random(-0.2, 0.2), Math.random(-0.1, 0.1)));//Add some randomness
-     ball.vel.add(p5.Vector.sub(ball.pos, this.pos).setMag(currVelMag + Math.random(3)));
+     ball.vel.add(createVector(Math.random(-0.1, 0.1), Math.random(-0.1, 0.1)));//Add some randomness
+     ball.vel.add(p5.Vector.sub(ball.pos, this.pos).setMag(currVelMag + Math.random(1.5)));
 
    }
     //This was my own version before
