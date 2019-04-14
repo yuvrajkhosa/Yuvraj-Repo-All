@@ -62,12 +62,13 @@ function draw(){
     ballArr[0].pos.y = 20;
   }
   ballArr[0].update();
-  ballArr[0].show();
   ballArr[0].bounce();
+  
   for(var i in pegs){
     pegs[i].show();
     pegs[i].checkCollision(ballArr[0]);
   }
+  ballArr[0].show();
 
 }
 
