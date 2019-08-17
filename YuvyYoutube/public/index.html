@@ -1,14 +1,19 @@
 <!DOCTYPE html>
-<html onclick="createPlayer()">
-  <body >
-    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-    <h1 id="time"></h1>
-    <input id="inputURL" type = "text" style="position: absolute"></input>
+<html>
+  <body>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+   
+    <h1 id="clientCount" style="position: absolute">1</h1>
+    <h1 style="position: absolute;left: 25px">Clients</h1>
+    <p id="names" style="position: absolute; top: 40px"></p>
+    <h1 class="heading-1" style="position: relative; left: 25%">Watch Youtube With Friends (AKA Satraj)</h1>
+
+    <input id="inputURL" type = "text" style="left: 25%;position: absolute; width: 700px"></input>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <script src="http://www.youtube.com/player_api"></script>
-    <div id="player" style="position: absolute; top: 5%"></div>
+    <div id="player" style="position: relative; left: 25%; top: 85px; border: solid 4px #17d4b1"></div>
     <script  src="index.js"></script>
   </body>
 </html>

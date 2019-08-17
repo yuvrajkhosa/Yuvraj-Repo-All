@@ -13,7 +13,10 @@ var player;
 window.onYouTubeIframeAPIReady = function() {
   player = new YT.Player('player', {
       videoId: 'ErQQc6cUSTA',
+      height: '400',
+      width: '800',
       playerVars: {
+          color: "red",
           controls: 1,
           autoplay: 0,
           enablejsapi: 1,
@@ -59,18 +62,31 @@ inputURL.addEventListener("keyup", event => {//Press enter in input bar
 });
 
 
+
+socket.on('clientCount', (count) => {
+    document.getElementById("clientCount").innerHTML = count;
+})
+
 socket.on('connect', () => {
   socketId = socket.id;
   console.log(`${socketId} connected`);
 
 });
 
+// socket.on('addNameForClient', (name) => {
+//   document.getElementById("names").innerHTML = document.getElementById("names").innerHTML + "<br>" + name;
+// });
+// 
+// socket.on('removeNameForClient', (name) => {
+//
+// })
+
 socket.on('forClient', (data) => {
   if(typeof data == "string"){
     player.loadVideoById(data);
     setTimeout(() => {
     //  player.playVideo()
-      }, 500);
+    }, 500);
   }
   else{
     if(data.id != socketId){//Execute if message not from self
