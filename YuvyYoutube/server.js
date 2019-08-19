@@ -2,26 +2,31 @@ const express = require('express');
 const app = express();
 const server = app.listen(3000);
 const io = require('socket.io')(server);
+var currentVideoCode = 'ooOELrGMn14';
 app.use(express.static('public'));
 console.log("Server running... ");
 
-var names = {};
+var clientsArray = [];
 var clients = 0;
 io.on("connect", (socket) => {
   clients++;
+  clientsArray.push(socket.id);//Pushing clients to an array
   updateClientCount();
-
+//  io.sockets.connected[socket.id].emit("forClient", currentVideoCode);
+  console.log(`Connected ${socket.id}`);
 
 
 
   socket.on("disconnect", () => {
     console.log("DISCONNEEEEEEEEECT!");
+    clientsArray.splice(clientsArray.indexOf(socket.id), 1);
     clients--;
     updateClientCount();
     // io.emit("removeNameForClient", names[socket.id.substring(0, 4)]);
     // delete names[socket.id.substring(0, 4)];
     // console.log(names);
     console.log(`Clients: ${clients}`)
+    console.log(clientsArray);
   });
 
   // socket.on("addNameForServer", (name) => {
@@ -31,15 +36,24 @@ io.on("connect", (socket) => {
   //     io.emit("addNameForClient", name);
   // });
 
+  socket.on('firstTimeRequestForTime', () => {
+      io.sockets.connected[clientsArray[0]].emit("sendTimeData");//This will tell master socket (first person to connect) to pause video which will jump EVERYONE to current position.
+  });
+  socket.on('playerIsReady', () => {
+    //io.emit("forClient", currentVideoCode);
+    io.sockets.connected[socket.id].emit("firstConnectVideo", currentVideoCode);
+    console.log(`Player ready ${socket.id}`);
+  });
   socket.on("eventChange", (data) => {
       console.log(data);
       io.emit("forClient", data);
   });
 
   socket.on("changeVideo", (url) =>{
-
-	  io.emit("forClient", extractID(url));
+    currentVideoCode = extractID(url);
+	  io.emit("forClient", currentVideoCode);
   });
+
 
 
 
