@@ -1,0 +1,68 @@
+html{
+  background-color: #292929;
+}
+.text{
+  font-family: "Arial";
+  color: #AEB6BF;
+}
+#inputURL{
+  left: 50%;
+  width: 100px;
+  height: 40px;
+  transform: translateX(-50%);
+  position: relative;
+  background-color: #363636;
+  border: none;
+  font-size: 15px;
+  font-family: "Helvetica";
+  text-align: center;
+  color: #a6a6a6;
+  border-radius: 10px;
+  transition-property: width;
+  transition-timing-function: ease;
+  transition-duration: 2s;
+}
+
+#inputURL:focus{
+  width: 1000px;
+  outline: none;
+   box-shadow: 0 0 3pt 2pt #292929;
+   animation-name: focusAnim;
+   animation-duration: 2s;
+   animation-iteration-count: infinite;
+}
+
+@keyframes focusAnim {
+
+  0%{
+    box-shadow: 0 0 2.5pt 2pt #292929;
+  }
+  50%{
+    box-shadow: 0 0 2.5pt 2pt;
+  }
+  100%{
+    box-shadow: 0 0 2.5pt 2pt #292929;
+  }
+
+}
+#player{
+  border: solid 10px #4a4948;
+  border-radius: 10px;
+  position: absolute;
+  margin-left: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+  /* display:inline-block; */
+}
+.clientsInfo{
+  text-align: center;
+}
+
+h1{
+  text-align: center;
+}
+
+h2{
+  display: inline;
+}

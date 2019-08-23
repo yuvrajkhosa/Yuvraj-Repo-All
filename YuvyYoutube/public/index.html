@@ -1,19 +1,20 @@
 <!DOCTYPE html>
-<html style="background-color: #363636">
-  <body style="background-color: #363636">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-   
-    <h1 id="clientCount" style="position: absolute; color: #AEB6BF">1</h1>
-    <h1 style="position: absolute;left: 25px; color: #AEB6BF">Clients</h1>
-    <p id="names" style="position: absolute; top: 40px; color: #AEB6BF"></p>
-    <h1 class="heading-1" style="position: relative; left: 25%; color: #AEB6BF">Watch Youtube With Friends (AKA Satraj)</h1>
+<html>
+  <body>
+    <link rel="stylesheet" href="style.css">
+  <div class="clientsInfo">
+      <h2 class="text" id="clientCount">1</h2>
+      <h2 class="text" id="clientOrClients">Client</h2>
 
-    <input id="inputURL" type = "text" style="left: 25%;position: absolute; width: 700px; background-color: #AEB6BF"></input>
+  </div>
+    <h1 class="text" >Watch Youtube With Friends</h1>
+    <input spellcheck="false" placeholder="Video URL" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Video URL'; sendURLToServer(this.value); this.value=''" id="inputURL" type = "text"></input>
+
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <script src="http://www.youtube.com/player_api"></script>
-    <div id="player" style="position: relative; left: 25%; top: 85px; border: solid 4px #363636"></div>
+    <div id="player"></div>
     <script  src="index.js"></script>
   </body>
 </html>

@@ -5,6 +5,8 @@ var inputURL = document.getElementById("inputURL");
 socket = io.connect('/');
 const joinSound = new Audio('Join.mp3');
 const leftSound = new Audio('Left.mp3');
+
+
 // Load the IFrame Player API code asynchronously.
 var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
@@ -18,12 +20,12 @@ window.onYouTubeIframeAPIReady = function() {
       height: '600',
       width: '1000',
       playerVars: {
-          color: "red",
+          color: "blue",
           controls: 1,
           autoplay: 0,
           enablejsapi: 1,
           iv_load_policy: 3,
-          // modestbranding: 1,
+          modestbranding: 1,
           showinfo: 1
       },
       events: {
@@ -79,12 +81,29 @@ function onPlayerStateChange(event){
 inputURL.addEventListener("keyup", event => {//Press enter in input bar
   if(event.keyCode == 13){
     event.preventDefault();
-    socket.emit("changeVideo", inputURL.value);
-    inputURL.value = "";
+    sendURLToServer(inputURL.value);
   }
 });
 
+function sendURLToServer(url){
+    if(url == ""){
+      console.error("NO URL")
+    }
+    else{
+      socket.emit("changeVideo", url);
+      console.log(url);
+    }
+
+
+}
+
 socket.on('clientCount', (count) => {
+    if(count > 1){
+      document.getElementById("clientOrClients").innerHTML = "Clients";
+    }
+    else{
+      document.getElementById("clientOrClients").innerHTML = "Client";
+    }
     if(document.getElementById("clientCount").innerHTML < count){
       joinSound.play();
     }
