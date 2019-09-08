@@ -3,8 +3,9 @@ var socketId;
 var counter = 0;
 var inputURL = document.getElementById("inputURL");
 socket = io.connect('/');
-const joinSound = new Audio('Join.mp3');
-const leftSound = new Audio('Left.mp3');
+
+var selectedUserToBlock;
+
 
 
 // Load the IFrame Player API code asynchronously.
@@ -26,7 +27,9 @@ window.onYouTubeIframeAPIReady = function() {
           enablejsapi: 1,
           iv_load_policy: 3,
           modestbranding: 1,
-          showinfo: 1
+          showinfo: 1,
+		  rel: 0,
+		  origin: "https://www.youtube.com"
       },
       events: {
         "onReady" : onPlayerReady,
@@ -97,20 +100,43 @@ function sendURLToServer(url){
 
 }
 
-socket.on('clientCount', (count) => {
-    if(count > 1){
+socket.on('clientCount', (data) => {
+
+    while(document.getElementById("clientList").hasChildNodes()){//While there are still list items (client names) in the unordered list, keep removing them to start from a fresh slate
+      document.getElementById("clientList").removeChild(document.getElementById("clientList").firstChild);
+    }
+    for(let i = 0; i < data.client.length; i++){//Add all the clients one by one
+      let node = document.createElement("button");
+
+
+      document.getElementById("clientList").appendChild(node);
+      node.onclick = () => clientClicked(data.client[i]);//On click execute clientCLicked() with the IP of the client as an argument.
+      node.innerHTML = `<span>${data.client[i].substring(7)}</span>`;
+      if(data.blockedUsers.includes(data.client[i])){//Server tells which users are blocked, if this user is in blocked list then maek then red
+        node.style.backgroundColor = 'fireBrick';//SEt here because javascript cant grab color info from css without Window.getComputedStyle();
+      }
+      else{
+        node.style.backgroundColor = 'grey';//Set here becausse we need to access it later
+      }
+      node.classList.add('clientText');//Add this class
+    }
+    let clientsCount = data.client.length;
+    if(clientsCount > 1){
       document.getElementById("clientOrClients").innerHTML = "Clients";
     }
     else{
       document.getElementById("clientOrClients").innerHTML = "Client";
     }
-    if(document.getElementById("clientCount").innerHTML < count){
-      joinSound.play();
-    }
-    else if(document.getElementById("clientCount").innerHTML > count){//DIdnt use else because otherwise sound plays on first join because client count and innerHTML is equal
-      leftSound.play();
-    }
-    document.getElementById("clientCount").innerHTML = count;
+    //
+    // if(document.getElementById("clientCount").innerHTML < clientsCount){
+    //   joinSound.play();
+    //
+    // }
+    // else if(document.getElementById("clientCount").innerHTML > clientsCount){//DIdnt use else because otherwise sound plays on first join because client count and innerHTML is equal
+    //   leftSound.play();
+    // }
+    document.getElementById("clientCount").innerHTML = clientsCount;
+
 
 })
 
@@ -177,4 +203,37 @@ socket.on('firstConnectVideo', (url) =>{
 function onPlayerReady(){
   socket.emit('playerIsReady');
   console.log("Ready");
+}
+
+socket.on('changeBlockedUser', (data) => {
+  let textNode = document.getElementById("clientList").children;//Store this as variable for readability
+  for(let i = 0; i < textNode.length; i++){//Go through the buttons of the unordered list
+
+    if(textNode[i].innerHTML.substring(6, textNode[i].innerHTML.indexOf("/") - 1) == data.client.substring(7)){//This is to get only IP and not <span> and </span> element
+
+      if(textNode[i].style.backgroundColor == 'grey'){//If it is not blocked (color is grey)
+        textNode[i].style.backgroundColor = 'fireBrick';//Change to red
+      }
+      else{
+        textNode[i].style.backgroundColor = 'grey';//Otherwise person is blocked and change back to grey
+      }
+    }
+  }
+});
+
+
+
+document.getElementById("passwordCheck").addEventListener("keyup", event => {//Press enter in input bar
+  if(event.keyCode == 13){
+    event.preventDefault();
+    socket.emit("blockUser", {client: selectedUserToBlock, password: document.getElementById("passwordCheck").value})
+    document.getElementById("passwordCheck").value = "";
+    document.getElementById("passwordCheck").placeholder = "Password";
+  }
+});
+
+function clientClicked(client){
+  selectedUserToBlock = client;
+  document.getElementById("passwordCheck").focus();
+
 }

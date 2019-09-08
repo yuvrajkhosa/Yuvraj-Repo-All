@@ -5,39 +5,30 @@ const io = require('socket.io')(server);
 var currentVideoCode = 'ooOELrGMn14';
 app.use(express.static('public'));
 console.log("Server running... ");
+const blockPassword = "nojooda";
+var clientsObject = {};
+var blockedList = [];
 
-var clientsArray = [];
-var clients = 0;
 io.on("connect", (socket) => {
-  clients++;
-  clientsArray.push(socket.id);//Pushing clients to an array
-  updateClientCount();
-//  io.sockets.connected[socket.id].emit("forClient", currentVideoCode);
-  console.log(`Connected ${socket.id}`);
+  clientsObject[socket.id] = socket.handshake.address;
+  updateClientCount(true);
+  console.log(clientsObject)
 
 
 
   socket.on("disconnect", () => {
-    console.log("DISCONNEEEEEEEEECT!");
-    clientsArray.splice(clientsArray.indexOf(socket.id), 1);
-    clients--;
-    updateClientCount();
-    // io.emit("removeNameForClient", names[socket.id.substring(0, 4)]);
-    // delete names[socket.id.substring(0, 4)];
-    // console.log(names);
-    console.log(`Clients: ${clients}`)
-    console.log(clientsArray);
+    delete clientsObject[socket.id];
+    updateClientCount(false);//Client will be deleted from clientObject in updateClientCount();
+
+
+
+    console.log(clientsObject);
   });
 
-  // socket.on("addNameForServer", (name) => {
-  //     console.log(`Adding name: ${name}`);
-  //     names[socket.id.substring(0, 4)] = name;//Only use first 4 charactes of id.
-  //     console.log(names);
-  //     io.emit("addNameForClient", name);
-  // });
 
   socket.on('firstTimeRequestForTime', () => {
-      io.sockets.connected[clientsArray[0]].emit("sendTimeData");//This will tell master socket (first person to connect) to pause video which will jump EVERYONE to current position.
+      // console.log(Object.keys(clientsObject));
+      io.sockets.connected[Object.keys(clientsObject)[0]].emit("sendTimeData");//This will tell master socket (first person to connect) to pause video which will jump EVERYONE to current position.
   });
   socket.on('playerIsReady', () => {
     //io.emit("forClient", currentVideoCode);
@@ -45,13 +36,38 @@ io.on("connect", (socket) => {
     console.log(`Player ready ${socket.id}`);
   });
   socket.on("eventChange", (data) => {
+      if(blockedList.includes(socket.handshake.address)){//If ip is blocked, just return
+        return;
+      }
       console.log(data);
       io.emit("forClient", data);
   });
 
   socket.on("changeVideo", (url) =>{
+    if(blockedList.includes(socket.handshake.address)){
+      return;
+    }
     currentVideoCode = extractID(url);
 	  io.emit("forClient", currentVideoCode);
+  });
+
+  socket.on("blockUser", (data) => {
+    console.log(`Blocking ${data.client} with password ${data.password}`);
+    if(data.password == blockPassword){
+      let dataToSend = {
+        isBlocked: true,
+        client: data.client
+      }
+      if(blockedList.includes(data.client)){//If user already blocked, unblock them and set isBlocked to false
+        blockedList.splice(blockedList.indexOf(data.client), 1);
+        dataToSend['isBlocked'] = false;
+      }
+      else{//Add user to blocked list
+        blockedList.push(data.client);
+      }
+
+      io.emit("changeBlockedUser", dataToSend);
+    }
   });
 
 
@@ -60,8 +76,16 @@ io.on("connect", (socket) => {
 
 })
 
-function updateClientCount(){
-  io.emit("clientCount", clients);
+function updateClientCount(isAdded){
+
+  let data = {
+    isAdded: isAdded,
+    client: Object.values(clientsObject),
+    blockedUsers: blockedList
+  }
+
+  io.emit("clientCount", data);
+
 }
 
 function extractID(url){
