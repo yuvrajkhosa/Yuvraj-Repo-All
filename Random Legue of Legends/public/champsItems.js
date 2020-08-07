@@ -137,12 +137,18 @@ const champsArr =
 "Xin Zhao",
 "Yasuo",
 "Yorick",
+
 "Zac",
 "Zed",
 "Ziggs",
 "Zilean",
 "Zoe",
-"Zyra"]
+"Zyra",
+"Yuumi",
+"Quiyana",
+"Senna",
+"Aphelios",
+"Sett"]
 
 const itemsArr = ["Abyssal Mask",
 "Adaptive Helm",

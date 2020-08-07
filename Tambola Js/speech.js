@@ -7,13 +7,7 @@ recognition.continuous = true;
 recognition.lang = 'en-US'
 recognition.interimResults = false;
 recognition.maxAlternatives = 1;
-document.getElementById("button").onclick = () => {
-  recognition.start();
- 
-  console.log("Speech recognition started...");
 
-  //recognition.continous = true;
-}
 recognition.onresult = (event) => {//No more iterimResult. So we will only fire this function when FINAL result is gotten.
 
 

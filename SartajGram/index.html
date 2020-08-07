@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.dom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.dom.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.sound.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.sound.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.js"></script>
+<script language="javascript" type="text/javascript" src="path/to/p5.sound.js"></script>
+</body>
+
+<script>
+var counter;
+var img;
+var rand;
+var ight = new Audio("ight.m4a");
+var harry = new Audio("harry.m4a")
+
+
+
+
+
+
+function setup(){
+
+  createCanvas(displayWidth,displayHeight);
+  background(200);
+  img = loadImage("https://image.ibb.co/bL1OP8/sartaj.png")
+  counter = 0;
+
+
+}
+
+function draw(){
+if (mouseIsPressed) {
+
+  image(img,mouseX - 70,mouseY - 70,200,200)
+  text("buh igh",mouseX,mouseY)
+}
+}
+
+
+function mouseClicked(){
+  if (counter != 3) {
+    ight.play();
+    counter++;
+
+  }
+  else {
+    harry.play();
+    counter = 0;
+
+  }
+}
+</script>

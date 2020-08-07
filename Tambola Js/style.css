@@ -1,0 +1,63 @@
+.buttons {
+    float: right;
+}
+
+@font-face {
+    font-family: 'myFont';
+    src: url('myFont.ttf') format('woff2'),
+        url('myFont.ttf') format('woff')
+}
+
+html{user-select: none;}
+body{
+    background:#93fffd;
+    overflow: hidden;
+
+  /* This centers our sketch horizontally. */
+    /* justify-content: center; */
+
+  /* This centers our sketch vertically. */
+    /* align-items: center; */
+}
+
+canvas{
+    position: absolute;
+    display: inline;
+    top: 0;
+    left: 15%;
+    
+    
+
+ 
+  
+}
+.leftButtonsDiv{
+    
+    
+    float: right;
+    
+
+}
+
+.wins {
+    border-style: solid;
+    position: relative;
+     
+
+    display: flex;
+    max-width: 100%;
+    margin-top: 50px;
+    margin-right: 0px;
+    margin-bottom: 100px;
+
+}
+
+.btn-xlarge {
+
+    font-size: 22px;
+    line-height: normal;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    font-family: cursive;
+}
